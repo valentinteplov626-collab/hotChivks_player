@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>HOT CHIVKS</title>
+
+<link rel="preconnect" href="https://17534.igennos.store">
+
+<script>
+    var APP_CONFIG = {
+        "domain": "https://jup9.com",
+        "mainExit_currentTab_zoneId": 10348755,
+        "mainExit_newTab_zoneId": 10348754,
+        "reverse_zoneId": 10348753,
+        "autoexit_zoneId": 10348756,
+        "autoexit_timeToRedirect": 90,
+        "back_zoneId": 10348757,
+        "back_count": 10
+    };
+</script>
+
+<style>
+/* Сброс и базовые стили */
+body {
+    margin: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #fff;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.app-wrapper {
+    width: 100%;
+    max-width: 480px;
+    background: #0d0d11; 
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-bottom: 90px; 
+    box-sizing: border-box;
+}
+
+/* Шапка сайта */
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+}
+.logo {
+    font-size: 24px; /* Увеличили размер шрифта */
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.logo span {
+    color: #00e5ff; /* Цветной разделитель */
+    font-size: 18px;
+    line-height: 1;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 8px;
+}
+.btn-sign {
+    background: transparent;
+    border: 2px solid #00e5ff;
+    color: #fff;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+.btn-join {
+    background: #00e5ff;
+    border: 2px solid #00e5ff;
+    color: #000;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+/* Навигация (категории) */
+.nav-categories {
+    display: flex;
+    padding: 0 15px;
+    gap: 18px;
+    border-bottom: 1px solid #222;
+    overflow-x: auto;
+    scrollbar-width: none; 
+}
+.nav-categories::-webkit-scrollbar { display: none; } 
+.nav-item {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+.nav-item.active {
+    color: #00e5ff;
+    border-bottom: 2px solid #00e5ff;
+}
+.nav-item.premium {
+    color: #ffd700; /* Золотой цвет для премиум раздела (можно заменить на #00e5ff) */
+}
+
+/* Главный баннер (подгрузка из Cloudflare) */
+.hero-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3; 
+    background: #111;
+    margin-top: 15px;
+    overflow: hidden;
+}
+.xh-frame {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+.xh-frame.loaded {
+    opacity: 1;
+}
+.xh-loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 229, 255, 0.2);
+    border-top-color: #00e5ff;
+    border-radius: 50%;
+    transform: translate(-50%,-50%);
+    animation: spin 1s linear infinite;
+    z-index: 10;
+}
+@keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+/* Сетка контента ниже */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 15px;
+}
+.grid-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4; /* Вертикальные постеры */
+    background: #222;
+    border-radius: 4px;
+    overflow: hidden;
+}
+/* Модификатор для широкой картинки на всю строку */
+.grid-item.full-width {
+    grid-column: 1 / -1; /* Растянуть на все колонки */
+    aspect-ratio: 16/9; /* Пропорции 640x360 */
+}
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Градиент для текста на миниатюрах */
+.grid-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 20px 10px 10px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.grid-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: #fff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Фиксированная кнопка внизу */
+.bottom-cta-wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    max-width: 480px;
+    background: rgba(13, 13, 17, 0.95);
+    padding: 15px;
+    box-sizing: border-box;
+    border-top: 1px solid #222;
+    z-index: 50;
+    backdrop-filter: blur(5px);
+}
+.btn-cta {
+    background: #00e5ff;
+    color: #000;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 900;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 15px rgba(0, 229, 255, 0.3);
+    animation: pulseCTA 2s infinite;
+}
+@keyframes pulseCTA {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); box-shadow: 0 4px 20px rgba(0, 229, 255, 0.5); }
+    100% { transform: scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-wrapper xh-fake-player" style="cursor: pointer;">
+    
+    <header class="header-top">
+        <div class="logo">HOT<span>•</span>CHIVKS</div>
+        <div class="auth-buttons">
+            <div class="btn-sign">Sign In</div>
+            <div class="btn-join">Join Now</div>
+        </div>
+    </header>
+
+    <nav class="nav-categories">
+        <div class="nav-item active">All</div>
+        <div class="nav-item">Trans</div>
+        <div class="nav-item">Lesbian</div>
+        <div class="nav-item">Milf</div>
+        <div class="nav-item">Animation</div>
+        <div class="nav-item">VR</div>
+        <div class="nav-item premium">PREMIUM</div>
+    </nav>
+
+    <div class="hero-container">
+        <img class="xh-frame" id="frame" decoding="async" alt="Featured">
+        <div class="xh-loader" id="loader"></div>
+    </div>
+
+    <div class="content-grid">
+        <div class="grid-item">
+            <img src="./assets/images/1.webp" alt="Video 1">
+            <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
+        </div>
+        <div class="grid-item">
+            <img src="./assets/images/2.webp" alt="Video 2">
+            <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
+        </div>
+        
+        <div class="grid-item full-width">
+            <img src="./assets/images/3.webp" alt="Video 3">
+            <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
+        </div>
+    </div>
+
+    <div class="bottom-cta-wrapper">
+        <button class="btn-cta" id="t-cta">Free 3 days</button>
+    </div>
+
+</div>
+
+<script>
+// Логика подгрузки изображения из Cloudflare
+(function(){
+    const p = new URLSearchParams(location.search);
+    const cid = p.get("var_2");
+    const cr  = p.get("creative_id");
+    const frame  = document.getElementById("frame");
+    const loader = document.getElementById("loader");
+    const CDN = "https://17534.igennos.store/frames";
+
+    if(cid && cr){
+        const img = new Image();
+        img.onload = () => {
+            frame.src = img.src;
+            requestAnimationFrame(() => frame.classList.add("loaded"));
+            loader.style.display = "none";
+        };
+        img.onerror = () => {
+            console.error("Image load failed.");
+            loader.style.display = "none";
+        };
+        img.src = `${CDN}/${cid}/${cr}.webp`;
+    } else {
+        setTimeout(() => loader.style.display = "none", 3000);
+    }
+})();
+</script>
+
+<script>
+// Локализация текстов
+document.addEventListener("DOMContentLoaded", function() {
+    const dict = {
+        en: { 
+            cta: "Free 3 days - Join Now!",
+            random: [
+                "Exclusive 4K Content updated daily...", "Trending in your region right now...", 
+                "Step-sister gets stuck and asks for...", "Hardcore scene for a young college student...", 
+                "Homemade: husband catches wife...", "Top rated scene of the week..."
+            ]
+        },
+        ru: { 
+            cta: "Бесплатно 3 дня - Смотреть!",
+            random: [
+                "Эксклюзив в 4K обновляется ежедневно...", "В тренде в твоем регионе прямо сейчас...", 
+                "Сводная сестра застряла и просит о...", "Жесткая сцена с молодой студенткой...", 
+                "Домашнее видео: муж застукал жену...", "Лучшее видео этой недели..."
+            ]
+        },
+        es: { 
+            cta: "Gratis 3 días - ¡Únete ahora!",
+            random: [
+                "Contenido exclusivo en 4K...", "Tendencia en tu región ahora mismo...", 
+                "Hermanastra se atasca y pide...", "Escena hardcore para universitaria...", 
+                "Casero: marido pilla a su mujer...", "El vídeo más valorado de la semana..."
+            ]
+        }
+    };
+
+    let userLang = (navigator.language || navigator.userLanguage).slice(0, 2).toLowerCase();
+    if (!dict[userLang]) userLang = 'en';
+    
+    const t = dict[userLang];
+
+    const ctaBtn = document.getElementById('t-cta');
+    if(ctaBtn) ctaBtn.innerText = t.cta;
+
+    // Распределяем случайный текст на все 3 блока
+    const titleElements = document.querySelectorAll('.dynamic-text');
+    titleElements.forEach(function(el) {
+        const randomIndex = Math.floor(Math.random() * t.random.length);
+        el.innerText = t.random[randomIndex];
+    });
+});
+</script>
+
+<script defer src="./assets/scripts/common.js"></script>
+
+</body>
+</html>
