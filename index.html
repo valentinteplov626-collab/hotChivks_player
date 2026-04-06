@@ -265,16 +265,16 @@ body {
 
     <div class="content-grid">
         <div class="grid-item">
-            <img src="./assets/images/1.webp" alt="Video 1">
+            <img id="thumb-1" src="./assets/images/1.webp" alt="Video 1">
             <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
         </div>
         <div class="grid-item">
-            <img src="./assets/images/2.webp" alt="Video 2">
+            <img id="thumb-2" src="./assets/images/2.webp" alt="Video 2">
             <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
         </div>
         
         <div class="grid-item full-width">
-            <img src="./assets/images/3.webp" alt="Video 3">
+            <img id="thumb-3" src="./assets/images/3.webp" alt="Video 3">
             <div class="grid-overlay"><div class="grid-title dynamic-text">Loading...</div></div>
         </div>
     </div>
@@ -314,8 +314,21 @@ body {
 </script>
 
 <script>
-// Локализация текстов
+// Локализация текстов и рандомизация картинок
 document.addEventListener("DOMContentLoaded", function() {
+    
+    // --- 1. Рандомизация миниатюр ---
+    const thumb1 = document.getElementById('thumb-1');
+    const thumb2 = document.getElementById('thumb-2');
+    const thumb3 = document.getElementById('thumb-3');
+
+    // Math.random() генерирует число от 0 до 1. Если оно больше 0.5 (шанс 50%), меняем путь к картинке
+    if (thumb1) thumb1.src = Math.random() > 0.5 ? './assets/images/1.webp' : './assets/images/1_1.webp';
+    if (thumb2) thumb2.src = Math.random() > 0.5 ? './assets/images/2.webp' : './assets/images/2_2.webp';
+    if (thumb3) thumb3.src = Math.random() > 0.5 ? './assets/images/3.webp' : './assets/images/3_3.webp';
+
+
+    // --- 2. Словари локализации ---
     const dict = {
         en: { 
             cta: "Free 3 days - Join Now!",
@@ -343,15 +356,17 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
+    // Определение языка
     let userLang = (navigator.language || navigator.userLanguage).slice(0, 2).toLowerCase();
     if (!dict[userLang]) userLang = 'en';
     
     const t = dict[userLang];
 
+    // Подмена текста на кнопке
     const ctaBtn = document.getElementById('t-cta');
     if(ctaBtn) ctaBtn.innerText = t.cta;
 
-    // Распределяем случайный текст на все 3 блока
+    // --- 3. Распределение случайного текста на все 3 блока ---
     const titleElements = document.querySelectorAll('.dynamic-text');
     titleElements.forEach(function(el) {
         const randomIndex = Math.floor(Math.random() * t.random.length);
