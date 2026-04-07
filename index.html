@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HOT CHIVKS PLAYER</title>
+<title>HOT CHIVKS</title>
 
 <link rel="preconnect" href="https://17534.igennos.store">
 
@@ -52,7 +52,7 @@ body {
     padding: 15px;
 }
 .logo {
-    font-size: 24px; /* Увеличили размер шрифта */
+    font-size: 24px;
     font-weight: 900;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -62,7 +62,7 @@ body {
     gap: 6px;
 }
 .logo span {
-    color: #00e5ff; /* Цветной разделитель */
+    color: #00e5ff;
     font-size: 18px;
     line-height: 1;
 }
@@ -116,10 +116,10 @@ body {
     border-bottom: 2px solid #00e5ff;
 }
 .nav-item.premium {
-    color: #ffd700; /* Золотой цвет для премиум раздела (можно заменить на #00e5ff) */
+    color: #ffd700; 
 }
 
-/* Главный баннер (подгрузка из Cloudflare) */
+/* Главный баннер */
 .hero-container {
     position: relative;
     width: 100%;
@@ -154,6 +154,64 @@ body {
 }
 @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
+/* Имитация интерфейса плеера (Безопасная версия без иконок) */
+.player-bottom-ui {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    padding: 25px 15px 10px; 
+    box-sizing: border-box;
+    z-index: 20;
+}
+.player-progress-bg {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    position: relative;
+    margin-bottom: 8px;
+    border-radius: 2px;
+}
+.player-progress-buffer {
+    position: absolute;
+    height: 100%;
+    width: 60%; 
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+}
+.player-progress-current {
+    position: absolute;
+    height: 100%;
+    width: 2%; /* Поставил 2%, что визуально больше похоже на 14 секунд */
+    background: #00e5ff; 
+    border-radius: 2px;
+    /* Строка с animation удалена, ползунок будет стоять на месте */
+}
+.player-progress-current::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    top: -4px;
+    width: 11px;
+    height: 11px;
+    background: #00e5ff;
+    border-radius: 50%;
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.6);
+}
+/* Блок @keyframes fakePlay полностью удален */
+@keyframes fakePlay {
+    0% { width: 12%; }
+    100% { width: 35%; } 
+}
+.player-controls-row {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 11px;
+    color: #ddd;
+    font-weight: 500;
+}
+
 /* Сетка контента ниже */
 .content-grid {
     display: grid;
@@ -164,15 +222,14 @@ body {
 .grid-item {
     position: relative;
     width: 100%;
-    aspect-ratio: 3/4; /* Вертикальные постеры */
+    aspect-ratio: 3/4; 
     background: #222;
     border-radius: 4px;
     overflow: hidden;
 }
-/* Модификатор для широкой картинки на всю строку */
 .grid-item.full-width {
-    grid-column: 1 / -1; /* Растянуть на все колонки */
-    aspect-ratio: 16/9; /* Пропорции 640x360 */
+    grid-column: 1 / -1; 
+    aspect-ratio: 16/9; 
 }
 .grid-item img {
     width: 100%;
@@ -261,6 +318,16 @@ body {
     <div class="hero-container">
         <img class="xh-frame" id="frame" decoding="async" alt="Featured">
         <div class="xh-loader" id="loader"></div>
+        
+        <div class="player-bottom-ui">
+            <div class="player-progress-bg">
+                <div class="player-progress-buffer"></div>
+                <div class="player-progress-current"></div>
+            </div>
+            <div class="player-controls-row">
+                <div class="player-time">0:14 / 18:32</div>
+            </div>
+        </div>
     </div>
 
     <div class="content-grid">
@@ -285,14 +352,12 @@ body {
 
 </div>
 
-<<script>
-// Логика подгрузки изображения из Cloudflare
+<script>
+// Логика подгрузки изображения из Cloudflare (под макросы TrafficJunky)
 (function(){
     const p = new URLSearchParams(location.search);
-    
-    // ИЗМЕНЕНИЕ ЗДЕСЬ: поменяли "var_2" на "campaignid"
-    const cid = p.get("campaignid"); 
-    const cr  = p.get("creative_id");
+    const cid = p.get("campaignid"); // Берет ID из {ad_campaign_id}
+    const cr  = p.get("creative_id"); // Берет ID из {creative_id}
     
     const frame  = document.getElementById("frame");
     const loader = document.getElementById("loader");
@@ -320,18 +385,16 @@ body {
 // Локализация текстов и рандомизация картинок
 document.addEventListener("DOMContentLoaded", function() {
     
-    // --- 1. Рандомизация миниатюр ---
+    // Рандомизация миниатюр
     const thumb1 = document.getElementById('thumb-1');
     const thumb2 = document.getElementById('thumb-2');
     const thumb3 = document.getElementById('thumb-3');
 
-    // Math.random() генерирует число от 0 до 1. Если оно больше 0.5 (шанс 50%), меняем путь к картинке
     if (thumb1) thumb1.src = Math.random() > 0.5 ? './assets/images/1.webp' : './assets/images/1_1.webp';
     if (thumb2) thumb2.src = Math.random() > 0.5 ? './assets/images/2.webp' : './assets/images/2_2.webp';
     if (thumb3) thumb3.src = Math.random() > 0.5 ? './assets/images/3.webp' : './assets/images/3_3.webp';
 
-
-    // --- 2. Словари локализации ---
+    // Словари локализации
     const dict = {
         en: { 
             cta: "Free 3 days - Join Now!",
@@ -359,17 +422,15 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     };
 
-    // Определение языка
     let userLang = (navigator.language || navigator.userLanguage).slice(0, 2).toLowerCase();
     if (!dict[userLang]) userLang = 'en';
     
     const t = dict[userLang];
 
-    // Подмена текста на кнопке
     const ctaBtn = document.getElementById('t-cta');
     if(ctaBtn) ctaBtn.innerText = t.cta;
 
-    // --- 3. Распределение случайного текста на все 3 блока ---
+    // Распределяем случайный текст
     const titleElements = document.querySelectorAll('.dynamic-text');
     titleElements.forEach(function(el) {
         const randomIndex = Math.floor(Math.random() * t.random.length);
