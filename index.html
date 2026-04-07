@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HOT CHIVKS</title>
+<title>HOT CHIVKS PLAYER</title>
 
 <link rel="preconnect" href="https://17534.igennos.store">
 
@@ -285,12 +285,15 @@ body {
 
 </div>
 
-<script>
+<<script>
 // Логика подгрузки изображения из Cloudflare
 (function(){
     const p = new URLSearchParams(location.search);
-    const cid = p.get("var_2");
+    
+    // ИЗМЕНЕНИЕ ЗДЕСЬ: поменяли "var_2" на "campaignid"
+    const cid = p.get("campaignid"); 
     const cr  = p.get("creative_id");
+    
     const frame  = document.getElementById("frame");
     const loader = document.getElementById("loader");
     const CDN = "https://17534.igennos.store/frames";
